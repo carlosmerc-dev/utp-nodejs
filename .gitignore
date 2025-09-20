@@ -1,0 +1,10 @@
+# Dependencias
+node_modules/
+
+# Build y logs
+dist/
+build/
+*.log
+
+# Configuración local
+.env
