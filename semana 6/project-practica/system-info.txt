@@ -1,0 +1,5 @@
+
+  Plataforma: win32
+  Arquitectura: x64
+  CPUs: 6
+  Memoria libre: 1369.05 MB
