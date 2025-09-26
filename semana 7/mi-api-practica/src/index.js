@@ -1,23 +1,27 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Ruta GET /ping
-app.get('/ping', (req, res) => {
-    res.json({ message: 'pong' });
+// Habilitar JSON entrante
+app.use(express.json());
+
+// Ruta de salud
+app.get('/health', (req, res) => {
+    res.status(200).json({ ok: true, uptime: process.uptime() });
 });
 
-// Ruta GET /hello/:name
-app.get('/hello/:name', (req, res) => {
-    const name = req.params.name;
-    res.json({ message: `Hola, ${name}` });
+// Ruta raíz
+app.get('/', (req, res) => {
+    res.send('Hola desde UTP - El docente del curso enseña muy bien');
 });
 
-// Ruta GET /hello
-app.get('/hello', (req, res) => {
-    res.status(400).json({ error: 'Se requiere nombre en la ruta' });
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
 
-app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
+// Ruta POST de ejemplo
+app.post('/api/echo', (req, res) => {
+    const data = req.body;
+    if (!data) return res.status(400).json({ error: 'Body required' });
+    res.status(200).json({ received: data });
 });
