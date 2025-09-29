@@ -1,0 +1,35 @@
+<h2>Integración Express + Angular</h2>
+
+<p *ngIf="msg; else cargando">
+  {{ msg }}
+</p>
+<ng-template #cargando>
+  Cargando saludo...
+</ng-template>
+
+<div class="container mt-4">
+  <h1 class="display-5 text-primary">Angular + Bootstrap</h1>
+
+  <div class="alert alert-success" role="alert">
+    Bootstrap está funcionando en esta aplicación
+  </div>
+
+  <button class="btn btn-dark">Botón Bootstrap</button>
+</div>
+
+
+<div class="container mt-4">
+  <h3>Usuarios</h3>
+
+  <div class="row g-3">
+    <div class="col-md-4" *ngFor="let u of users">
+      <div class="card p-3 border"
+           [ngClass]="{ 'border-success': u.active, 'border-secondary': !u.active }">
+        <h5 class="mb-1">{{ u.name }}</h5>
+        <p class="mb-0" [ngStyle]="{ color: u.active ? 'green' : 'gray' }">
+          {{ u.email }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
