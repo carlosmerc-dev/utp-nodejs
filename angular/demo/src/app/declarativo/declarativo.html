@@ -1,19 +1,9 @@
-<!-- Componente Menú -->
-<nav>
-  <a routerLink="/menu">Ir al Menú</a>
-  <a routerLink="/saludo">Ir a Saludo</a>
-</nav>
-
-<router-outlet></router-outlet>
-
 <div class="container">
-  <!-- Panel 1: Datos -->
+  <!-- Panel 0: título, pipe y listado declarativo -->
   <section class="panel">
-    <!-- Declarativo: aplicar transformación -->
-    <h2>En mayúsculas: {{ "datos" | uppercase }}</h2>
+    <h2>En mayúsculas: {{ 'datos' | uppercase }}</h2>
     <p>
       <strong>numbers:</strong>
-      <!-- Declarativo: recorrer y mostrar -->
       [
       <span *ngFor="let n of numbers; let last = last">
         {{ n }}<span *ngIf="!last">, </span>
@@ -25,27 +15,22 @@
     <button (click)="reset()">Reiniciar</button>
   </section>
 
-  <!-- Panel 2: Declarativo -->
+  <!-- Panel 1: Declarativo -->
   <section class="panel">
-    <h2>Enfoque DECLARATIVO (Angular / plantilla)</h2>
-    <p>
-      <em>Total (la vista declara qué quiere mostrar):</em>
+    <h3>Enfoque DECLARATIVO (Angular / plantilla)</h3>
+    <p><em>Total (la vista declara qué quiere mostrar):</em>
       <strong>{{ declarativeSum }}</strong>
     </p>
     <small>La plantilla no contiene bucles ni acumuladores; solo muestra el valor.</small>
   </section>
 
-  <!-- Panel 3: Imperativo -->
+  <!-- Panel 2: Imperativo -->
   <section class="panel">
-    <h2>Enfoque IMPERATIVO (JS / paso a paso)</h2>
+    <h3>Enfoque IMPERATIVO (JS / paso a paso)</h3>
     <pre [innerText]="imperativeSnippet" style="white-space: pre-wrap;"></pre>
-    <p>
-      <em>Total (calculado con bucle en TS):</em>
+    <p><em>Total (calculado con bucle en TS):</em>
       <strong>{{ imperativeSum }}</strong>
     </p>
     <small>Requiere escribir el “cómo”: índice, acumulador y actualizar cuando cambian los datos.</small>
   </section>
-
-  <!-- Aquí insertamos nuestro nuevo componente Saludo -->
-  <app-saludo></app-saludo>
 </div>

@@ -1,32 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Importa tu componente
-import { Saludo } from './saludo/saludo'; 
-// Importa las directivas de router
-import { RouterOutlet, RouterLink } from '@angular/router';
+
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-declarativo',
+  imports: [CommonModule],
   standalone: true,
-   // Agrega el componente y las directivas de router
-  imports: [CommonModule, Saludo, RouterOutlet, RouterLink],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  templateUrl: './declarativo.html',
+  styleUrl: './declarativo.css'
 })
-export class App implements OnInit {
-  // Datos de ejemplo
+export class Declarativo implements OnInit {
   numbers: number[] = [1, 2, 3, 4, 5];
-
-  // Resultado IMPERATIVO (se actualiza manualmente)
   imperativeSum = 0;
 
-  // Fragmento de código que mostraremos tal cual en la vista
+  // Bloque que se muestra tal cual
   imperativeSnippet = `let sum = 0;
 for (let i = 0; i < numbers.length; i++) {
   sum += numbers[i];
 }`;
 
-  // Getter DECLARATIVO (la vista solo declara qué mostrar)
+  // Declarativo: la vista solo pide este valor
   get declarativeSum(): number {
     return this.numbers.reduce((acc, n) => acc + n, 0);
   }
