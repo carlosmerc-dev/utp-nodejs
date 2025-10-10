@@ -1,0 +1,182 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  border-radius: 2px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+thead th {
+  padding: 1.5rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: white;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+thead th:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+tbody td {
+  padding: 1.2rem 1rem;
+  font-size: 1rem;
+  color: #555;
+  border-right: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+tbody td:last-child {
+  border-right: none;
+}
+
+/* Estilos específicos para cada columna */
+tbody td:first-child {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+tbody td:nth-child(2) {
+  font-weight: 700;
+  color: #27ae60;
+  font-size: 1.1rem;
+}
+
+tbody td:last-child {
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Efectos adicionales */
+tbody tr:hover td:first-child {
+  color: #3498db;
+}
+
+tbody tr:hover td:nth-child(2) {
+  color: #2ecc71;
+  font-size: 1.15rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  table {
+    font-size: 0.9rem;
+  }
+  
+  thead th,
+  tbody td {
+    padding: 1rem 0.5rem;
+  }
+  
+  tbody tr:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  thead th,
+  tbody td {
+    padding: 0.8rem 0.4rem;
+    min-width: 120px;
+  }
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+table {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Efecto de carga para las filas */
+tbody tr {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+tbody tr:nth-child(1) { animation-delay: 0.1s; }
+tbody tr:nth-child(2) { animation-delay: 0.2s; }
+tbody tr:nth-child(3) { animation-delay: 0.3s; }

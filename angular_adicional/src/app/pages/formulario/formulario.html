@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Formulario de Registro</h2>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <label>Nombre</label>
+    <input formControlName="nombre" />
+    <small *ngIf="enviado && form.controls.nombre.invalid">
+      Debe ingresar un nombre (mínimo 2 caracteres.)
+    </small>
+
+    <label>Correo</label>
+    <input formControlName="correo" />
+    <small *ngIf="enviado && form.controls.correo.invalid"> Ingrese un correo válido. </small>
+
+    <label>Edad</label>
+    <input type="number" formControlName="edad" />
+    <small *ngIf="enviado && form.controls.edad.invalid"> Debe ser mayor o igual a 18. </small>
+
+    <label class="check">
+      <input type="checkbox" formControlName="acepta" />
+      Acepto los términos y condiciones
+      <!-- Corregí "Acetpo" a "Acepto" -->
+    </label>
+    <small *ngIf="enviado && form.controls.acepta.invalid"> Debe aceptar los términos </small>
+
+    <button class="btn" [disabled]="form.invalid">Enviar</button>
+    <!-- Corregí [disable] a [disabled] -->
+  </form>
+
+  <p class="msg" [class.ok]="mensaje.startsWith('✅')">{{ mensaje }}</p>
+  <!-- Corregí starsWith a startsWith -->
+</div>
