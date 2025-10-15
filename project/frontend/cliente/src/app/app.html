@@ -1,7 +1,7 @@
 <h2>Integración Express + Angular</h2>
 
 <p *ngIf="msg; else cargando">
-  {{ msg }}
+  {{ msg | uppercase }}
 </p>
 <ng-template #cargando>
   Cargando saludo...

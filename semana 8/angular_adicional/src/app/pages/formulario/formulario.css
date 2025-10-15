@@ -1,0 +1,7 @@
+label { display:block; margin-top:.75rem; }
+input { width:100%; padding:.4rem; border:1px solid #cbd5e1; border-radius:8px; }
+small { color:#dc2626; display:block; }
+.btn { margin-top:1rem; padding:.5rem .9rem; border:0; background:#2563eb; color:white; border-radius:8px; }
+.msg { margin-top:1rem; }
+.msg.ok { color:#16a34a; }
+.check { display:flex; gap:.5rem; align-items:center; margin-top:.5rem; }
