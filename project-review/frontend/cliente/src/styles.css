@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+h2 {
+    background-color: aqua;
+    color: blue;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size:x-large;
+    text-align: center;
+    padding: 20px;
+    margin: 0px 500px 50px 500px;
+
+}
