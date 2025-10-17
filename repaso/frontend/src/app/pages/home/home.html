@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Angular + Node (TS)</h2>
+  <p><strong>Mensaje de la API:</strong> {{ msg }}</p>
+
+  <h3>Todos desde /api/todos</h3>
+  <p *ngIf="error" style="color:#b91c1c">Error: {{ error }}</p>
+  <ul *ngIf="!error">
+    <li *ngFor="let t of todos">
+      <input type="checkbox" [checked]="t.done" disabled />
+      {{ t.title }} (id: {{ t.id }})
+    </li>
+  </ul>
+</div>

@@ -8,6 +8,6 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getHello() {
-    return this.http.get<{ message: string }>(`${this.baseUrl}/api/hello`);
+    return this.http.get<{ message: string }>(`${this.baseUrl}/api/greet/Wilber`);
   }
 }
