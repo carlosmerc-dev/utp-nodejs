@@ -1,23 +1,28 @@
-import { type Student } from "../App"; // Importamos el tipo
+import { useStudents } from "../context/studentCore";
 
-// Definimos las Props que recibe este componente
-type Props = {
-  students: Student[];
-};
-
-export default function HomePage({ students }: Props) {
+export default function HomePage() {
+  const { students } = useStudents();
   return (
-    <div>
-      <h2>Lista de Alumnos Registrados</h2>
+    <div className="container py-5">
+      <h2 className="mb-4">Lista de Alumnos Registrados</h2>
 
-      {/* Si no hay alumnos, muestra un mensaje */}
+      {/* Si 'students' está vacío, mostramos un mensaje (cubre carga inicial y ausencia de registros) */}
       {students.length === 0 ? (
-        <p className="text-muted">
-          Aún no hay alumnos registrados. Ve a la pestaña "Registrar".
-        </p>
+        <div className="d-flex align-items-center">
+          <div
+            className="spinner-border text-primary me-3"
+            role="status"
+            aria-hidden="true"
+          >
+            <span className="visually-hidden">Cargando...</span>
+          </div>
+          <span className="text-muted">
+            Cargando alumnos o aún no hay registros...
+          </span>
+        </div>
       ) : (
         <div className="row">
-          {/* Usamos .map() como la clase pasada [cite: 139] */}
+          {/* Usamos .map() para renderizar tarjetas de alumnos */}
           {students.map((student) => (
             <div className="col-md-4" key={student.id}>
               <div className="card mb-3">

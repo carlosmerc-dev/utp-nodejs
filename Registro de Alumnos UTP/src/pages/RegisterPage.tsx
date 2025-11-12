@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useStudents } from "../context/studentCore";
 
-// Definimos las Props que recibe: la función para añadir alumno
-type Props = {
-  onAddStudent: (name: string, course: string) => void;
-};
+export default function RegisterPage() {
+  const { addStudent } = useStudents();
+  // Referencia al input de nombre para hacer focus al montar
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
-export default function RegisterPage({ onAddStudent }: Props) {
+  useEffect(() => {
+    // Hacer foco en el input de nombre la primera vez que se monta el componente
+    nameInputRef.current?.focus();
+  }, []);
   // STATES LOCALES para controlar el formulario
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
@@ -23,8 +27,8 @@ export default function RegisterPage({ onAddStudent }: Props) {
       return;
     }
 
-    // Ejecuta la función que vino por Props desde App.tsx
-    onAddStudent(name, course);
+    // Ejecuta la función del contexto para añadir alumno
+    addStudent(name, course);
 
     // Limpiar el formulario
     setName("");
@@ -50,6 +54,7 @@ export default function RegisterPage({ onAddStudent }: Props) {
               id="name"
               value={name} // 1. El valor lo da el State
               onChange={(e) => setName(e.target.value)} // 2. onChange actualiza el State
+              ref={nameInputRef} // Conectamos el ref al input para poder focusearlo
             />
           </div>
 
