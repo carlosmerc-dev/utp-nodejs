@@ -8,7 +8,7 @@ export default function HomePage() {
   // TAREA 3: Consumir el contexto
   // ==========================================================
   // Obtenemos la lista 'students' desde el contexto global
-  const { students } = useStudents();
+  const { students, deleteStudent  } = useStudents();
 
 
   return (
@@ -29,6 +29,12 @@ export default function HomePage() {
                 <div className="card-body">
                   <h5 className="card-title">{student.name}</h5>
                   <p className="card-text">Curso: {student.course}</p>
+                  <button 
+                    className="btn btn-danger btn-sm"
+                    onClick={() => deleteStudent(student.id)} // ¡El botón de borrado!
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </div>
             </div>

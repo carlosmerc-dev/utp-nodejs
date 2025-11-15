@@ -11,6 +11,7 @@ export type Student = {
 type StudentContextType = {
   students: Student[];
   addStudent: (name: string, course: string) => void;
+  deleteStudent: (id: number) => void; // <--- ¡AÑADIDO!
 };
 
 // 3. Creamos el Contexto
@@ -19,6 +20,7 @@ type StudentContextType = {
 export const StudentContext = createContext<StudentContextType>({
   students: [],
   addStudent: () => {}, // Función vacía por defecto
+  deleteStudent: () => {}, // <--- ¡AÑADIDO! (Función vacía por defecto)
 });
 
 // 4. (Buena Práctica) Creamos un "Hook personalizado"
