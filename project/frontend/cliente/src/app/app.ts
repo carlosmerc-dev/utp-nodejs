@@ -10,13 +10,14 @@ import { ApiService } from './api.service';
 })
 export class App implements OnInit {
   msg?: string;
+  message = "Hello world"
 
   constructor(private api: ApiService) {}
 
   ngOnInit() {
     this.api.getHello().subscribe({
       next: data => this.msg = data.message,
-      error: err => this.msg = 'Error al llamar API'
+      error: err => this.msg = 'Hola mundo'
     });
   }
 

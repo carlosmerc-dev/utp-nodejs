@@ -11,15 +11,6 @@ app.get('/', (req, res) => {
   res.send('Hola desde Express');
 });
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hola desde Express (TS)' });
-});
-
-app.get('/api/greet/:name', (req, res) => {
-  const { name } = req.params;
-  res.json({ message: `Hola, ${name} desde Express` });
-});
-
 app.listen(PORT, () => {
   console.log(`Servidor TS en http://localhost:${PORT}`);
 });
