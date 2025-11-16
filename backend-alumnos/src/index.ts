@@ -43,3 +43,34 @@ app.get('/api/students', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener los alumnos' });
   }
 });
+
+// ENDPOINT 2: Crear un nuevo alumno (Create) - MODO SEGURO
+app.post('/api/students', async (req, res) => {
+  try {
+    const { name, course } = req.body;
+
+    // 1. Definimos el SQL con Placeholders (?)
+    const query = "INSERT INTO student (name, course) VALUES (?, ?)";
+
+    // 2. Pasamos los valores en un array separado
+    const [result] = await pool.query(query, [name, course]);
+
+    // 3. Respondemos con el nuevo ID (opcional)
+    res.status(201).json({ newId: (result as any).insertId, name, course });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al crear el alumno' });
+  }
+});
+
+app.delete('/api/students/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const query = "DELETE FROM student WHERE id = ?";
+    await pool.query(query, [id]); // Pasamos [id] como array
+    res.json({ message: `Alumno con id ${id} eliminado` });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar el alumno' });
+  }
+});
