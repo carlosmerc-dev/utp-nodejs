@@ -1,83 +1,92 @@
+// Importamos los hooks necesarios, incluyendo useRef y useEffect
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useStudents } from "../context/studentCore";
 
+// Importamos nuestro hook personalizado
+import { useStudents } from "../context/StudentContext";
+
+// ¡Ya NO necesita recibir Props!
 export default function RegisterPage() {
-  const { addStudent } = useStudents();
-  // Referencia al input de nombre para hacer focus al montar
-  const nameInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // Hacer foco en el input de nombre la primera vez que se monta el componente
-    nameInputRef.current?.focus();
-  }, []);
-  // STATES LOCALES para controlar el formulario
+  // States locales para el formulario (igual que en S12)
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
 
-  // Hook de React Router para redirigir al usuario
+  // ==========================================================
+  // TAREA 3: Consumir el contexto
+  // ==========================================================
+  // Obtenemos la función 'addStudent' desde el contexto global
+  const { addStudent } = useStudents();
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); // Evita que la página se recargue
+  // ==========================================================
+  // TAREA 2: useRef para acceder al DOM
+  // 1. Creamos la referencia
+  // ==========================================================
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
-    // Validación simple
+  // ==========================================================
+  // TAREA 2: useEffect para hacer foco al cargar
+  // 2. Usamos useEffect (con array vacío) para ejecutar al montar
+  // ==========================================================
+  useEffect(() => {
+    // El '.current' es el elemento del DOM.
+    // Usamos '?' (optional chaining) por si el elemento aún no está listo.
+    nameInputRef.current?.focus();
+  }, []); // <-- Array vacío, se ejecuta 1 SOLA VEZ
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!name || !course) {
       alert("Por favor completa todos los campos");
       return;
     }
 
-    // Ejecuta la función del contexto para añadir alumno
+    // Ejecuta la función OBTENIDA DEL CONTEXTO
     addStudent(name, course);
 
-    // Limpiar el formulario
     setName("");
     setCourse("");
-
-    // Redirigir al usuario al "Inicio"
     navigate("/");
   };
 
   return (
-    <div className="container py-5">
-      <div className="card p-4 shadow-sm">
-        <h2 className="mb-4">Registrar Nuevo Alumno</h2>
-
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Nombre Completo
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              value={name} // 1. El valor lo da el State
-              onChange={(e) => setName(e.target.value)} // 2. onChange actualiza el State
-              ref={nameInputRef} // Conectamos el ref al input para poder focusearlo
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="course" className="form-label">
-              Curso
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="course"
-              value={course} // 1. El valor lo da el State
-              onChange={(e) => setCourse(e.target.value)} // 2. onChange actualiza el State
-            />
-          </div>
-
-          <div className="d-flex justify-content-end">
-            <button type="submit" className="btn btn-primary">
-              Registrar
-            </button>
-          </div>
-        </form>
-      </div>
+    <div>
+      <h2>Registrar Nuevo Alumno</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Nombre Completo
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            // ==========================================================
+            // TAREA 2: "Conectamos" el ref al input
+            // 3. Asignamos el ref al atributo 'ref' del input
+            // ==========================================================
+            ref={nameInputRef}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="course" className="form-label">
+            Curso
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="course"
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Registrar
+        </button>
+      </form>
     </div>
   );
 }
