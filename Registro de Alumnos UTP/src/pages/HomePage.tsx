@@ -7,10 +7,18 @@ export default function HomePage() {
   // TAREA 3: Consumir el contexto
   // ==========================================================
   // Obtenemos la lista 'students' desde el contexto global
-  const { students, deleteStudent } = useStudents();
+  const { students, totalStudents, deleteStudent } = useStudents();
 
   return (
     <div>
+      {/* Tarjeta (Alert) de Sistema y Contador - Interfaz y Marca de Agua */}
+      <div className="alert alert-info mb-4 text-center" role="alert">
+        <h4 className="alert-heading mb-3">Sistema de CARLOS MERCEDES</h4>
+        <p className="mb-0">
+          <strong>Total de Alumnos en BD: {totalStudents}</strong>
+        </p>
+      </div>
+
       <h2>Lista de Alumnos Registrados</h2>
 
       {/* Si 'students' está vacío, mostramos un mensaje.

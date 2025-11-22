@@ -79,7 +79,7 @@ button:focus-visible {
 /* Ensure section headings look centered inside the cards/containers */
 h2 {
   text-align: center;
-  padding: 20px;
+  padding-bottom: 20px;
 }
 
 /* Simple theme overrides when using ThemeContext (data-theme attribute) */

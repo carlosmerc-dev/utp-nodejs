@@ -15,6 +15,7 @@ const API_URL = "http://localhost:3000/api/students";
 function App() {
   // El estado principal sigue viviendo aquí
   const [students, setStudents] = useState<Student[]>([]);
+  const [totalStudents, setTotalStudents] = useState<number>(0);
 
   // ==========================================================
   // TAREA 1: Cargar Alumnos al montar (GET)
@@ -30,6 +31,21 @@ function App() {
     };
     fetchStudents();
   }, []); // <-- Array de dependencias VACÍO. Se ejecuta 1 SOLA VEZ al montar.
+
+  // ==========================================================
+  // NUEVO: Cargar el conteo total de alumnos (solo al inicio)
+  // ==========================================================
+  useEffect(() => {
+    const fetchTotalStudents = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/total/count`);
+        setTotalStudents(response.data.total);
+      } catch (error) {
+        console.error("Error al cargar el conteo de alumnos:", error);
+      }
+    };
+    fetchTotalStudents();
+  }, []); // <-- Solo se ejecuta al montar el componente
 
   // 3. Función para Añadir Alumnos (POST)
   const handleAddStudent = async (name: string, course: string) => {
@@ -51,6 +67,10 @@ function App() {
       await axios.delete(`${API_URL}/${id}`);
       // Actualizamos el estado de React (Optimistic UI)
       setStudents((prevStudents) => prevStudents.filter((s) => s.id !== id));
+
+      // Actualizamos el contador después de eliminar
+      const response = await axios.get(`${API_URL}/total/count`);
+      setTotalStudents(response.data.total);
     } catch (error) {
       console.error("Error al eliminar alumno:", error);
     }
@@ -64,6 +84,7 @@ function App() {
     <StudentContext.Provider
       value={{
         students: students,
+        totalStudents: totalStudents, // <--- ¡NUEVO! Pasamos el contador
         addStudent: handleAddStudent,
         deleteStudent: handleDeleteStudent,
       }}

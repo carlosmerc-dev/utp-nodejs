@@ -10,6 +10,7 @@ export type Student = {
 // 2. Definimos la "forma" que tendrá nuestro contexto
 type StudentContextType = {
   students: Student[];
+  totalStudents: number; // <--- ¡NUEVO! Contador total
   addStudent: (name: string, course: string) => void;
   deleteStudent: (id: number) => void; // <--- ¡AÑADIDO!
 };
@@ -19,6 +20,7 @@ type StudentContextType = {
 // aunque el valor real vendrá del Provider en App.tsx.
 export const StudentContext = createContext<StudentContextType>({
   students: [],
+  totalStudents: 0, // <--- ¡NUEVO! Valor inicial
   addStudent: () => {}, // Función vacía por defecto
   deleteStudent: () => {}, // <--- ¡AÑADIDO! (Función vacía por defecto)
 });

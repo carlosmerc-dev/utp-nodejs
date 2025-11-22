@@ -44,7 +44,22 @@ app.get('/api/students', async (req, res) => {
   }
 });
 
-// ENDPOINT 2: Crear un nuevo alumno (Create) - MODO SEGURO
+// ENDPOINT 2: Obtener el conteo total de alumnos
+app.get('/api/students/total/count', async (req, res) => {
+  try {
+    // Usamos SELECT COUNT(*) para obtener el total de registros
+    const query = "SELECT COUNT(*) as total FROM student";
+    const [rows] = await pool.query(query);
+    
+    // Respondemos con el formato { "total": 5 }
+    res.json({ total: (rows as any)[0].total });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener el conteo de alumnos' });
+  }
+});
+
+// ENDPOINT 3: Crear un nuevo alumno (Create) - MODO SEGURO
 app.post('/api/students', async (req, res) => {
   try {
     const { name, course } = req.body;
@@ -64,6 +79,7 @@ app.post('/api/students', async (req, res) => {
   }
 });
 
+// ENDPOINT 4: Eliminar un alumno (Delete)
 app.delete('/api/students/:id', async (req, res) => {
   try {
     const { id } = req.params;
