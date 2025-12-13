@@ -1,5 +1,6 @@
 // Importamos nuestro hook personalizado
 import { useStudents } from "../context/StudentContext";
+import { useState } from "react";
 
 // ¡Ya NO necesita recibir Props!
 export default function HomePage() {
@@ -8,6 +9,55 @@ export default function HomePage() {
   // ==========================================================
   // Obtenemos la lista 'students' desde el contexto global
   const { students, totalStudents, deleteStudent } = useStudents();
+
+  // Estado para manejar la nota de cada alumno
+  const [scores, setScores] = useState<{ [key: number]: string }>({});
+
+  // Función para actualizar la nota de un alumno específico
+  const handleScoreChange = (studentId: number, score: string) => {
+    setScores((prev) => ({
+      ...prev,
+      [studentId]: score,
+    }));
+  };
+
+  // Función para guardar la nota
+  const handleSaveGrade = async (studentId: number, courseName: string) => {
+    const score = scores[studentId];
+
+    if (!score) {
+      alert("Por favor ingresa una nota");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/grades", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          student_id: studentId,
+          course: courseName,
+          score: parseFloat(score),
+        }),
+      });
+
+      if (response.ok) {
+        alert("Nota guardada exitosamente");
+        // Limpiar el campo después de guardar
+        setScores((prev) => ({
+          ...prev,
+          [studentId]: "",
+        }));
+      } else {
+        alert("Error al guardar la nota");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al conectar con el servidor");
+    }
+  };
 
   return (
     <div>
@@ -35,8 +85,38 @@ export default function HomePage() {
                 <div className="card-body">
                   <h5 className="card-title">{student.name}</h5>
                   <p className="card-text">Curso: {student.course}</p>
+
+                  {/* Sección para agregar nota */}
+                  <div className="mt-3 pt-3 border-top">
+                    <label className="form-label small mb-1">
+                      Ingresar Nota:
+                    </label>
+                    <div className="input-group input-group-sm mb-2">
+                      <input
+                        type="number"
+                        className="form-control"
+                        placeholder="Nota (0-20)"
+                        step="0.5"
+                        min="0"
+                        max="20"
+                        value={scores[student.id] || ""}
+                        onChange={(e) =>
+                          handleScoreChange(student.id, e.target.value)
+                        }
+                      />
+                      <button
+                        className="btn btn-success"
+                        onClick={() =>
+                          handleSaveGrade(student.id, student.course)
+                        }
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+
                   <button
-                    className="btn btn-danger btn-sm"
+                    className="btn btn-danger btn-sm w-100 mt-2"
                     onClick={() => deleteStudent(student.id)} // ¡El botón de borrado!
                   >
                     Eliminar
